@@ -1,0 +1,15 @@
+<dataset>
+	<user_tb userID="aaa" name="aaa" email="aaa" password="aaa" />
+	<user_tb userID="bbb" name="bbb" email="bbb" password="bbb" />
+	<user_tb userID="ccc" name="ccc" email="ccc" password="ccc" />
+	
+</dataset>
+
+<!--
+userId, name, email, password, messages, followings, followers
+	<user userID="ccc" name="ccc" email="ccc" password="ccc" />
+	<user userID="ccc" name="ccc" email="ccc" password="ccc" />
+	<user userID="ccc" name="ccc" email="ccc" password="ccc" />
+	<user userID="ccc" name="ccc" email="ccc" password="ccc" />
+-->
+	

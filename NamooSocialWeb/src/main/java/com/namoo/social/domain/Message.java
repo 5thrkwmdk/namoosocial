@@ -6,7 +6,7 @@ public class Message {
 	//
 	private int messageID;
 	private String contents;
-	private User writerID;
+	private User writer;
 	private Date reg_dt;
 	
 	//--------------------------------------------------------------------------
@@ -14,11 +14,10 @@ public class Message {
 		//
 	}
 	
-	public Message(int messageID, String contents, User writerID, Date reg_dt) {
+	public Message(int messageID, String contents, User writer) {
 		this.messageID = messageID;
 		this.contents = contents;
-		this.writerID = writerID;
-		this.reg_dt = reg_dt;
+		this.writer = writer;
 	}
 	//--------------------------------------------------------------------------
 
@@ -35,10 +34,10 @@ public class Message {
 		return messageID;
 	}
 	public User getWriterID() {
-		return writerID;
+		return writer;
 	}
 	public void setWriterID(User writerID) {
-		this.writerID = writerID;
+		this.writer = writerID;
 	}
 	public Date getReg_dt() {
 		return reg_dt;

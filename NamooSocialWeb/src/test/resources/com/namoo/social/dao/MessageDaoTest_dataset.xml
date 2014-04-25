@@ -1,0 +1,14 @@
+<dataset>
+
+	<user_tb userID="aaa" name="aaaa" email="aaaaa" password="aaaaaa" />
+	<user_tb userID="bbb" name="bbbb" email="bbbbb" password="bbbbbb" />
+	<user_tb userID="ccc" name="cccc" email="ccccc" password="cccccc" />
+	
+	<message_tb messageID="1" contents="contents1" writerID="aaa" reg_dt="2014-04-25 12:25:00"/>
+	<message_tb messageID="2" contents="contents2" writerID="bbb" reg_dt="2014-04-25 12:25:00"/>
+	<message_tb messageID="3" contents="contents3" writerID="ccc" reg_dt="2014-04-25 12:25:00"/>
+	<message_tb messageID="4" contents="contents4" writerID="aaa" reg_dt="2014-04-25 12:25:00"/>
+	<message_tb messageID="5" contents="contents5" writerID="bbb" reg_dt="2014-04-25 12:25:00"/>
+	<message_tb messageID="6" contents="contents6" writerID="aaa" reg_dt="2014-04-25 12:25:00"/>
+	
+</dataset>

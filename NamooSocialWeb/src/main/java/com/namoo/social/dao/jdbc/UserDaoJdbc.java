@@ -10,17 +10,22 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.namoo.social.dao.UserDao;
 import com.namoo.social.domain.Message;
 import com.namoo.social.domain.User;
 import com.namoo.social.shared.exception.NamooSocialExceptionFactory;
 
+@Repository
 public class UserDaoJdbc implements UserDao{
 	//
+	@Autowired
 	private DataSource dataSource;
 		
 	@Override
-	public List<User> readAllUser() {
+	public List<User> readAllUsers() {
 		// 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -28,7 +33,7 @@ public class UserDaoJdbc implements UserDao{
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = dataSource.getConnection();
-			String sql = "SELECT userID, name, email, password, messages FROM user_tb";
+			String sql = "SELECT userID, name, email, password FROM user_tb";
 			pstmt = conn.prepareStatement(sql);
 			reSet = pstmt.executeQuery();
 			
@@ -38,7 +43,7 @@ public class UserDaoJdbc implements UserDao{
 				user.setUserID(reSet.getString("userID"));
 				user.setName(reSet.getString("name"));
 				user.setEmail(reSet.getString("email"));
-				user.setMessages((List<Message>) reSet.getArray("messages"));
+//				user.setMessages((List<Message>) reSet.getArray("messages"));
 				
 				users.add(user);
 			}
@@ -46,7 +51,7 @@ public class UserDaoJdbc implements UserDao{
 			e.printStackTrace();
 			throw NamooSocialExceptionFactory.createRuntime("유저목록 조회 중 오류발생");
 		} finally {
-			if (conn != null) try { reSet.close(); } catch(Exception e) {}
+			if (reSet != null) try { reSet.close(); } catch(Exception e) {}
 			if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
 			if (conn != null) try { conn.close(); } catch(Exception e) {}
 		}
@@ -88,7 +93,7 @@ public class UserDaoJdbc implements UserDao{
 	}
 
 	@Override
-	public String insertUser(User user) {
+	public String createUser(User user) {
 		//
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -170,4 +175,121 @@ public class UserDaoJdbc implements UserDao{
 		}
 	}
 	//--------------------------------------------------------------------------
+	//following, follower 관련 기능
+	@Override
+	public List<User> readAllFollowings(String userID) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet reSet = null;
+		List<User> followingUsers = new ArrayList<User>();
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT userID, name, email, password, messages FROM user_tb WHERE = ? OR writerID IN (SELECT whom FROM usertouser_tb WHERE who= ?)";
+			pstmt = conn.prepareStatement(sql);
+			reSet = pstmt.executeQuery();
+			
+			while (reSet.next()) {
+				//
+				User user = new User();
+				user.setUserID(reSet.getString("userID"));
+				user.setName(reSet.getString("name"));
+				user.setEmail(reSet.getString("email"));
+				user.setMessages((List<Message>) reSet.getArray("messages"));
+				
+				followingUsers.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw NamooSocialExceptionFactory.createRuntime("유저목록 조회 중 오류발생");
+		} finally {
+			if (conn != null) try { reSet.close(); } catch(Exception e) {}
+			if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+			if (conn != null) try { conn.close(); } catch(Exception e) {}
+		}
+		return followingUsers;
+	}
+
+	@Override
+	public List<User> readAllFollowers(String userID) {
+		// 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet reSet = null;
+		List<User> followerUsers = new ArrayList<User>();
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT userID, name, email, password, messages FROM user_tb WHERE = ? OR writerID IN (SELECT whom FROM usertouser_tb WHERE who= ?)";
+			pstmt = conn.prepareStatement(sql);
+			reSet = pstmt.executeQuery();
+			
+			while (reSet.next()) {
+				//
+				User user = new User();
+				user.setUserID(reSet.getString("userID"));
+				user.setName(reSet.getString("name"));
+				user.setEmail(reSet.getString("email"));
+				user.setMessages((List<Message>) reSet.getArray("messages"));
+				
+				followerUsers.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw NamooSocialExceptionFactory.createRuntime("유저목록 조회 중 오류발생");
+		} finally {
+			if (conn != null) try { reSet.close(); } catch(Exception e) {}
+			if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+			if (conn != null) try { conn.close(); } catch(Exception e) {}
+		}
+		return followerUsers;
+	}
+
+	@Override
+	public void createFollowing(String who, String whom) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet reSet = null;
+		try {
+			conn = dataSource.getConnection();
+
+			String sql = "INSERT INTO usertouser_tb(who, whom) VALUES(?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, who);
+			pstmt.setString(2, whom);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw NamooSocialExceptionFactory.createRuntime("following 추가 중 오류 발생");
+		} finally {
+			 if ( reSet != null) try { reSet.close(); } catch (SQLException e) { }
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+	}
+
+	@Override
+	public void deleteFollower(String who, String whom) {
+		//
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = dataSource.getConnection();
+
+			String sql = "DELETE FROM usertouser_tb WHERE who = ? whom = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, who);
+			pstmt.setString(2, whom);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw NamooSocialExceptionFactory.createRuntime("follower 삭제 중 오류 발생");
+		} finally {
+			 if ( pstmt != null) try { pstmt.close(); } catch (SQLException e) { }
+			 if ( conn != null) try { conn.close(); } catch (SQLException e) { }
+		}
+	}
 }

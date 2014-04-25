@@ -4,23 +4,65 @@ import java.util.List;
 
 import com.namoo.social.domain.User;
 
-
 public interface UserDao {
 	//CRUD
-		/*
-		List<Blog> readAllBlog();
-		List<Blog> readAllMyBlogs(String userId);
-		Blog readBlog(int blogId);
-		int insertBlog(Blog blog);
-		void updateBlog(Blog blog);
-		void deleteBlog(int blogId);
-		*/
+	/**
+	 * 모든 유저 목록 조회
+	 * @return
+	 */
+	List<User> readAllUsers();
 	
-	List<User> readAllUser();
+	/**
+	 * 특정 유저 조회
+	 * @param userID
+	 * @return
+	 */
 	User readUser(String userID);
-	String insertUser(User user);
+	
+	/**
+	 * 새 유저 생성
+	 * @param user
+	 * @return
+	 */
+	String createUser(User user);
+	
+	/**
+	 * 유저 정보 업데이트
+	 * @param user
+	 */
 	void updateUser(User user);
+	
+	/**
+	 * 유저 삭제
+	 * @param userID
+	 */
 	void deleteUser(String userID);
 	
-
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * 내가 following하는 사람들 목록 조회
+	 * @param userID
+	 * @return
+	 */
+	List<User> readAllFollowings(String userID);
+	
+	/**
+	 * 나를 follower하는 사람들 목록 조회
+	 * @param userID
+	 * @return
+	 */
+	List<User> readAllFollowers(String userID);
+	
+	/**
+	 * following 만들기
+	 * @param user
+	 */
+	void createFollowing(String who, String whom);
+	
+	/**
+	 * follower 지우기
+	 * @param user
+	 */
+	void deleteFollower(String who, String whom);
 }

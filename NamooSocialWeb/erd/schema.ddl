@@ -1,68 +1,68 @@
--- »ç¿ëÀÚ
-DROP TABLE IF EXISTS USER_TB RESTRICT;
+-- ï¿½ï¿½ï¿½ï¿½ï¿½
+DROP TABLE IF EXISTS user_tb RESTRICT;
 
--- ¸Þ½ÃÁö
-DROP TABLE IF EXISTS MESSAGE_TB RESTRICT;
+-- ï¿½Þ½ï¿½ï¿½ï¿½
+DROP TABLE IF EXISTS message_tb RESTRICT;
 
--- »ç¿ëÀÚ°ü°è
-DROP TABLE IF EXISTS UserTOUser_TB RESTRICT;
+-- ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ï¿½
+DROP TABLE IF EXISTS usertouser_tb RESTRICT;
 
--- »ç¿ëÀÚ
-CREATE TABLE USER_TB (
-	userID   VARCHAR(20) NOT NULL, -- »ç¿ëÀÚ¾ÆÀÌµð
-	name     VARCHAR(20) NULL,     -- ÀÌ¸§
-	email    VARCHAR(40) NULL,     -- ÀÌ¸ÞÀÏ
-	password VARCHAR(20) NULL      -- ºñ¹Ð¹øÈ£
+-- ï¿½ï¿½ï¿½ï¿½ï¿½
+CREATE TABLE user_tb (
+	userID   VARCHAR(20) NOT NULL, -- ï¿½ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½Ìµï¿½
+	name     VARCHAR(20) NULL,     -- ï¿½Ì¸ï¿½
+	email    VARCHAR(40) NULL,     -- ï¿½Ì¸ï¿½ï¿½ï¿½
+	password VARCHAR(20) NULL      -- ï¿½ï¿½Ð¹ï¿½È£
 );
 
--- »ç¿ëÀÚ
-ALTER TABLE USER_TB
-	ADD CONSTRAINT PK_USER_TB -- »ç¿ëÀÚ ±âº»Å°
+-- ï¿½ï¿½ï¿½ï¿½ï¿½
+ALTER TABLE user_tb
+	ADD CONSTRAINT PK_user_tb -- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº»Å°
 		PRIMARY KEY (
-			userID -- »ç¿ëÀÚ¾ÆÀÌµð
+			userID -- ï¿½ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½Ìµï¿½
 		);
 
--- ¸Þ½ÃÁö
-CREATE TABLE MESSAGE_TB (
-	messageID INTEGER      NOT NULL, -- ¸Þ½ÃÁö¾ÆÀÌµð
-	contents  VARCHAR(500) NULL,     -- ³»¿ë
-	writerID  VARCHAR(20)  NULL,     -- ÀÛ¼ºÀÚ
-	REG_DT    TIMESTAMP    NULL      -- ÀÛ¼ºÀÏ½Ã
+-- ï¿½Þ½ï¿½ï¿½ï¿½
+CREATE TABLE message_tb (
+	messageID INTEGER      NOT NULL, -- ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
+	contents  VARCHAR(500) NULL,     -- ï¿½ï¿½ï¿½ï¿½
+	writerID  VARCHAR(20)  NULL,     -- ï¿½Û¼ï¿½ï¿½ï¿½
+	REG_DT    TIMESTAMP    NULL      -- ï¿½Û¼ï¿½ï¿½Ï½ï¿½
 );
 
--- ¸Þ½ÃÁö
-ALTER TABLE MESSAGE_TB
-	ADD CONSTRAINT PK_MESSAGE_TB -- ¸Þ½ÃÁö ±âº»Å°
+-- ï¿½Þ½ï¿½ï¿½ï¿½
+ALTER TABLE message_tb
+	ADD CONSTRAINT PK_message_tb -- ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½âº»Å°
 		PRIMARY KEY (
-			messageID -- ¸Þ½ÃÁö¾ÆÀÌµð
+			messageID -- ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
 		);
 
-ALTER TABLE MESSAGE_TB
+ALTER TABLE message_tb
 	MODIFY COLUMN messageID INTEGER NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE MESSAGE_TB
+ALTER TABLE message_tb
 	AUTO_INCREMENT = 1;
 
--- »ç¿ëÀÚ°ü°è
-CREATE TABLE UserTOUser_TB (
-	who  VARCHAR(20) NOT NULL, -- ´©°¡
-	whom VARCHAR(20) NOT NULL  -- ´©±¸¸¦
+-- ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ï¿½
+CREATE TABLE usertouser_tb (
+	who  VARCHAR(20) NOT NULL, -- ï¿½ï¿½ï¿½ï¿½
+	whom VARCHAR(20) NOT NULL  -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 );
 
--- »ç¿ëÀÚ°ü°è
-ALTER TABLE UserTOUser_TB
-	ADD CONSTRAINT PK_UserTOUser_TB -- »ç¿ëÀÚ°ü°è ±âº»Å°
+-- ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ï¿½
+ALTER TABLE usertouser_tb
+	ADD CONSTRAINT PK_usertouser_tb -- ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ï¿½ ï¿½âº»Å°
 		PRIMARY KEY (
-			who,  -- ´©°¡
-			whom  -- ´©±¸¸¦
+			who,  -- ï¿½ï¿½ï¿½ï¿½
+			whom  -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		);
 
--- ¸Þ½ÃÁö
-ALTER TABLE MESSAGE_TB
-	ADD CONSTRAINT FK_USER_TB_TO_MESSAGE_TB -- »ç¿ëÀÚ -> ¸Þ½ÃÁö
+-- ï¿½Þ½ï¿½ï¿½ï¿½
+ALTER TABLE message_tb
+	ADD CONSTRAINT FK_user_tb_TO_message_tb -- ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½Þ½ï¿½ï¿½ï¿½
 		FOREIGN KEY (
-			writerID -- ÀÛ¼ºÀÚ
+			writerID -- ï¿½Û¼ï¿½ï¿½ï¿½
 		)
-		REFERENCES USER_TB ( -- »ç¿ëÀÚ
-			userID -- »ç¿ëÀÚ¾ÆÀÌµð
+		REFERENCES user_tb ( -- ï¿½ï¿½ï¿½ï¿½ï¿½
+			userID -- ï¿½ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½Ìµï¿½
 		);
