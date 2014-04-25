@@ -18,9 +18,9 @@ public interface UserDao {
 	
 	List<User> readAllUser();
 	User readUser(String userID);
-	int insertUser(User user);
+	String insertUser(User user);
 	void updateUser(User user);
-	void deleteUser(String UserID);
+	void deleteUser(String userID);
 	
 
 }

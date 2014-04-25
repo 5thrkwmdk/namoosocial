@@ -4,7 +4,7 @@ import java.util.List;
 
 public class User {
 	//
-	private String usedId;
+	private String userID;
 	private String name;
 	private String email;
 	private String password;
@@ -13,14 +13,32 @@ public class User {
 	// 관계
 	private List<User> followings;
 	private List<User> followers;
+	//--------------------------------------------------------------------------
+	public User () {
+		//
+	}
 	
+	public User(String userID, String name) {
+		//
+		this.userID = userID;
+		this.name = name;
+	}
+	
+	public User(String userID, String name, String email, String password, List<Message> messages) {
+		 //
+		 this.userID = userID;
+		 this.name = name;
+		 this.email = email;
+		 this.password = password;
+		 this.messages = messages;
+	 }
 	//--------------------------------------------------------------------------
 	
-	public String getUsedId() {
-		return usedId;
+	public String getUserID() {
+		return userID;
 	}
-	public void setUsedId(String usedId) {
-		this.usedId = usedId;
+	public void setUserID(String userID) {
+		this.userID = userID;
 	}
 	public String getName() {
 		return name;

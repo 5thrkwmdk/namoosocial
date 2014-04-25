@@ -7,7 +7,7 @@ import com.namoo.social.domain.Message;
 public interface MessageDao {
 	//CRUD
 	List<Message> readAllMessage();
-	Message readMessage(int messsageID);
+	Message readMessage(int messageID);
 	int insertMessage(Message message);
 	void updateMessage(Message message);
 	void deleteMessage(int messageID);
